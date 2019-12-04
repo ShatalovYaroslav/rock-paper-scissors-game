@@ -1,24 +1,9 @@
 # **yamt** (yet another microservice template)
-Restful microservice template from ProActive
+Restful microservice template
 
 ## Purpose
 
 The purpose of the microservice template is to have common template for new microservice's implementation.
-
-## Build Badges
-
-To insert a build-badge like this one:
-[![Build Status](http://jenkins.activeeon.com/buildStatus/icon?job=scheduling)](http://jenkins.activeeon.com/job/scheduling/)
-
-We need to use the following code after creating the associated job on Jenkins:
-```
-[![Build Status](http://jenkins.activeeon.com/buildStatus/icon?job=<insert microservice job name>)](http://jenkins.activeeon.com/job/<insert microservice job name>/)
-```
-
-Same goes for the coveralls-badge:
-```
-[![Coverage Status](https://coveralls.io/repos/github/ow2-proactive/microservice-template/badge.svg?branch=origin%2Fmaster)](https://coveralls.io/github/ow2-proactive/microservice-template?branch=origin%2Fmaster)
-```
 
 ## Specific modifications
 The following modifications are needed before starting to work on the micro-service:
@@ -69,105 +54,6 @@ To access Swagger API:
 
 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
-## DB configuration
-
-#### Dependencies
-Add next dependencies to **build.gradle** file
-```
-compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.3.3.RELEASE'
-providedRuntime 'org.hsqldb:hsqldb:2.3.3'
-```
-
-In the **src/main/resources/application.properties** add configurations specific to your project:
-```
-logging.level.org.hibernate.SQL=off
-# Hibernate ddl auto (create, create-drop, update)
-spring.jpa.hibernate.ddl-auto=update
-# Show or not log for each sql query
-spring.jpa.show-sql=false
-```
-#### Configuration class
-For using DB configuration include next class to your project.
-Of course change 'microservice-template' name to proper one.
-
-```
-@Configuration
-public class DBConfiguration {
-
-    @Value("${spring.datasource.driverClassName:org.hsqldb.jdbc.JDBCDriver}")
-    private String dataSourceDriverClassName;
-
-    @Value("${spring.datasource.url:}")
-    private String dataSourceUrl;
-
-    @Value("${spring.datasource.username:root}")
-    private String dataSourceUsername;
-
-    @Value("${spring.datasource.password:}")
-    private String dataSourcePassword;
-
-    @Bean
-    @Profile("default")
-    public DataSource defaultDataSource() {
-        String jdbcUrl = dataSourceUrl;
-
-        if (jdbcUrl.isEmpty()) {
-            jdbcUrl = "jdbc:hsqldb:file:" + getDatabaseDirectory()
-                    + ";create=true;hsqldb.tx=mvcc;hsqldb.applog=1;hsqldb.sqllog=0;hsqldb.write_delay=false";
-        }
-
-        return DataSourceBuilder
-                .create()
-                .username(dataSourceUsername)
-                .password(dataSourcePassword)
-                .url(jdbcUrl)
-                .driverClassName(dataSourceDriverClassName)
-                .build();
-    }
-
-    @Bean
-    @Profile("mem")
-    public DataSource memDataSource() {
-        return createMemDataSource();
-    }
-
-    @Bean
-    @Profile("test")
-    public DataSource testDataSource() {
-        return createMemDataSource();
-    }
-
-    private DataSource createMemDataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase db = builder
-                .setType(EmbeddedDatabaseType.HSQL)
-                .build();
-        return db;
-    }
-
-    private String getDatabaseDirectory() {
-        String proactiveHome = System.getProperty("proactive.home");
-
-        if (proactiveHome == null) {
-            return System.getProperty("java.io.tmpdir") + File.separator
-                    + "proactive" + File.separator + "microservice-template";
-        }
-
-        return proactiveHome + File.separator + "data"
-                + File.separator + "db" + File.separator + "microservice-template";
-    }
-}
-```
-
-In application.properties add next information with correct values for your project
-
-```
-# DataSource settings: set here your own configurations for the database connection.
-spring.datasource.driverClassName=org.hsqldb.jdbc.JDBCDriver
-spring.datasource.url=jdbc:hsqldb:file:/tmp/proactive/microservice-template;create=true;hsqldb.tx=mvcc;hsqldb.applog=1;hsqldb.sqllog=0;hsqldb.write_delay=false
-spring.datasource.username=root
-spring.datasource.password=
-```
 
 ## Testing
 

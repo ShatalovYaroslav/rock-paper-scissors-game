@@ -23,14 +23,14 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.microservice_template.service;
+package org.myproject.game.service;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.ow2.proactive.microservice_template.model.User;
+import org.myproject.game.model.User;
 import org.springframework.stereotype.Service;
 
 

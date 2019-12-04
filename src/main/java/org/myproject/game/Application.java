@@ -23,7 +23,7 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.microservice_template;
+package org.myproject.game;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -82,16 +82,15 @@ public class Application extends WebMvcConfigurerAdapter {
     @Bean
     public Docket microserviceApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
-                                                      .groupName("microservice-template")
+                                                      .groupName("game")
                                                       .select()
                                                       .paths(allowedPaths())
                                                       .build();
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("microservice-template API")
-                                   .description("The purpose of the microservice-template is ...\n")
-                                   .licenseUrl("https://github.com/ow2-proactive/microservice-template/blob/master/LICENSE")
+        return new ApiInfoBuilder().title("game API")
+                                   .description("The purpose of this project is to play rock paper scissors game\n")
                                    .version("1.0")
                                    .build();
     }
