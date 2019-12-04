@@ -23,7 +23,7 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.microservice_template.rest;
+package org.myproject.game.rest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -39,9 +39,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.ow2.proactive.microservice_template.fixtures.UserFixture;
-import org.ow2.proactive.microservice_template.model.User;
-import org.ow2.proactive.microservice_template.service.UserService;
+import org.myproject.game.fixtures.UserFixture;
+import org.myproject.game.model.User;
+import org.myproject.game.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

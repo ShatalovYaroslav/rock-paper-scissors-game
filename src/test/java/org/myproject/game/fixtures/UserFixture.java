@@ -23,21 +23,17 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.microservice_template.model;
+package org.myproject.game.fixtures;
 
-import lombok.*;
+import org.myproject.game.model.User;
 
 
-@EqualsAndHashCode
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class User {
-    private String name;
+/**
+ * Created by Iaroslav on 4/29/2016.
+ */
+public class UserFixture {
 
-    private int age;
-
-    private double salary;
+    public static User simpleUser() {
+        return new User("Marco", 18, 70000);
+    }
 }
