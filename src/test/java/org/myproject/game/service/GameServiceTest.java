@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 
 /**
- * @author ActiveEon Team on 4/29/2016.
+ * @author ActiveEon Team on 7/12/2019.
  */
 public class GameServiceTest {
 

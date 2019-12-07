@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 /**
- * @author ActiveEon Team on 5/2/2016.
+ * @author ActiveEon Team on 7/12/2019.
  */
 public class AbstractRestTest {
     @Value("${local.server.port}")

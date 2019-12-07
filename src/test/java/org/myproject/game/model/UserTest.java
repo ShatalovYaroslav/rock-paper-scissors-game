@@ -36,7 +36,7 @@ import static org.junit.Assert.assertThat;
 
 
 /**
- * Created by Iaroslav on 4/29/2016.
+ * Created by Iaroslav on 7/12/2019.
  */
 public class UserTest {
 
