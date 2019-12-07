@@ -25,28 +25,34 @@
  */
 package rest;
 
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.myproject.game.Application;
 import org.myproject.game.model.GameMove;
+import org.myproject.game.model.GameResult;
 import org.myproject.game.model.PlayerMove;
+import org.myproject.game.model.PlayerResult;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
-import static org.hamcrest.CoreMatchers.is;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.withArgs;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 
 /**
- * Created by ActiveEon Team on 7/12/2019.
+ * Created by Yaroslav on 7/12/2019.
  */
 
 @ActiveProfiles("test")
@@ -63,18 +69,47 @@ public class SpringGameRestTest extends AbstractRestTest {
     @Before
     public void configureRestAssured() {
         REST_SERVICE_URI = "http://localhost:" + serverPort + "/game/";
+        RestAssured.port = serverPort;
     }
 
-    //testing using springframework RestTemplate
-    /* POST, PUT and GET */
+    //integration testing for REST API using RestAssured
     @Test
-    public void testPlatWithPC() {
-        PlayerMove playerMove = new PlayerMove("Yaro", GameMove.convert("rock"));
+    public void testPlayWithPC() {
+        PlayerMove playerMove = new PlayerMove("Yaro", GameMove.ROCK);
 
-        // play with PC
-        ResponseEntity respUResults = restTemplate.postForEntity(REST_SERVICE_URI + "playWithPC/", playerMove, PlayerMove.class);
-        assertThat(respUResults.getStatusCode(), is(HttpStatus.OK));
-        assertThat(respUResults.getBody(), is(playerMove));
+        Response response = given().body(playerMove)
+                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Content-Type", ContentType.JSON)
+                .when()
+                .post(REST_SERVICE_URI + "playWithPC/");
 
+        response.then()
+                .assertThat()
+                .statusCode(org.apache.http.HttpStatus.SC_OK)
+                .body("", hasSize(2));
+
+        response.then().
+                root("find {it.player_id == '%s'}").
+                body("move", withArgs("Yaro"), is("ROCK"));
+
+        //check the results as it depends on the produced value
+        PlayerResult[] results = response.body().as(PlayerResult[].class);
+
+        assertThat(results[0].getPlayerId(), is("Yaro"));
+        GameResult mineGameResult = results[0].getGameResult();
+        switch (mineGameResult) {
+            case DRAW:
+                assertThat(results[1].getGameResult(), is(GameResult.DRAW));
+                assertThat(results[1].getMove(), is(GameMove.ROCK));
+                break;
+            case WIN:
+                assertThat(results[1].getGameResult(), is(GameResult.LOOSE));
+                assertThat(results[1].getMove(), is(GameMove.SCISSORS));
+                break;
+            case LOOSE:
+                assertThat(results[1].getGameResult(), is(GameResult.WIN));
+                assertThat(results[1].getMove(), is(GameMove.PAPER));
+                break;
+        }
     }
 }

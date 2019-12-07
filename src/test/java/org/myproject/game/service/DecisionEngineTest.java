@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
 
 
 /**
- * @author ActiveEon Team on 7/12/2019.
+ * @author Yaroslav Shatalov on 7/12/2019.
  */
 public class DecisionEngineTest {
 
