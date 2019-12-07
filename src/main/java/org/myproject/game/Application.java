@@ -90,7 +90,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("game API")
-                                   .description("The purpose of this project is to play rock paper scissors game\n")
+                                   .description("The purpose of this project is to play 'rock paper scissors' game\n")
                                    .version("1.0")
                                    .build();
     }
