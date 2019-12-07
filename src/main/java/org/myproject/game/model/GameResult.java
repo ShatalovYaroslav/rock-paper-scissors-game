@@ -3,10 +3,10 @@ package org.myproject.game.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.ToString;
 
-@ToString
-/*
-this class defines the results in the game for each player
+/**
+ * this class defines the results in the game for each player
  */
+@ToString
 public enum GameResult {
     WIN(0),
     LOOSE(1),
@@ -14,12 +14,8 @@ public enum GameResult {
 
     private final int value;
 
-    private GameResult(int value) {
+    GameResult(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static GameResult convert(String state) {
@@ -27,6 +23,10 @@ public enum GameResult {
             return null;
         }
         return GameResult.valueOf(state.toUpperCase());
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @JsonValue

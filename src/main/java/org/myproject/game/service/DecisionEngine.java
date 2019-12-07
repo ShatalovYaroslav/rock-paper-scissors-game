@@ -1,6 +1,8 @@
-
 package org.myproject.game.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.myproject.game.exception.ClientException;
 import org.myproject.game.model.GameMove;
 import org.myproject.game.model.GameResult;
 import org.myproject.game.model.PlayerMove;
@@ -13,16 +15,23 @@ import java.util.List;
 
 @Service()
 public class DecisionEngine {
+    private final Logger logger = LogManager.getRootLogger();
 
-    /*
-    for now it is considered a game between 2 players, but an extension can be for more then 2 players
+    /**
+     * for now it is considered a game between 2 players, but an extension can be for more then 2 players
+     *
+     * @param playerMoves list of Moves selected by Player
+     * @return players results according to the rule of the game
      */
     public List<PlayerResult> decide(List<PlayerMove> playerMoves) {
         int playersNumber = playerMoves.size();
         if (playersNumber == 2)
             return twoValuesDecide(playerMoves.get(0), playerMoves.get(1));
-        else
-            throw new IllegalStateException("The players number: " + playersNumber + " is not supported in the current implementation");
+        else {
+            String errorMsg = "The players number: " + playersNumber + " is not supported in the current implementation";
+            logger.error(errorMsg);
+            throw new ClientException(errorMsg);
+        }
     }
 
     private List<PlayerResult> twoValuesDecide(PlayerMove playerMove1, PlayerMove playerMove2) {

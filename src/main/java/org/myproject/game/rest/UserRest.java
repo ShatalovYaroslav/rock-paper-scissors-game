@@ -43,8 +43,8 @@ public class UserRest {
     public ResponseEntity<User> getUser(@PathVariable("name") String name) {
         logger.debug("Fetching User with name " + name);
         return userService.findByName(name)
-                          .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                          .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
@@ -54,11 +54,11 @@ public class UserRest {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         logger.debug("Creating User " + user.getName());
         return userService.findByName(user.getName())
-                          .map(userFound -> new ResponseEntity<>(userFound, HttpStatus.CONFLICT))
-                          .orElseGet(() -> {
-                              userService.saveUser(user);
-                              return new ResponseEntity<>(user, HttpStatus.CREATED);
-                          });
+                .map(userFound -> new ResponseEntity<>(userFound, HttpStatus.CONFLICT))
+                .orElseGet(() -> {
+                    userService.saveUser(user);
+                    return new ResponseEntity<>(user, HttpStatus.CREATED);
+                });
     }
 
     //------------------- Update a User --------------------------------------------------------

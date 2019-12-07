@@ -25,15 +25,6 @@
  */
 package org.myproject.game.rest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -44,6 +35,15 @@ import org.myproject.game.model.User;
 import org.myproject.game.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 
 /**

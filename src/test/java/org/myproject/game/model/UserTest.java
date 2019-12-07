@@ -25,14 +25,14 @@
  */
 package org.myproject.game.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.myproject.game.fixtures.UserFixture;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
-import org.myproject.game.fixtures.UserFixture;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /**

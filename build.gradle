@@ -165,7 +165,7 @@ jacocoTestReport {
 
 clean {
     sourceSets.generated.java.srcDirs.each {
-       srcDir -> delete srcDir
+        srcDir -> delete srcDir
     }
 }
 
