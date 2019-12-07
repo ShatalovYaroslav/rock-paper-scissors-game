@@ -1,15 +1,13 @@
 package org.myproject.game.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 public class PlayerResult extends PlayerMove {
 
     @JsonProperty("game_result")

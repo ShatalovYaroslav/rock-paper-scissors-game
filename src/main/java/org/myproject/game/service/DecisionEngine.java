@@ -25,8 +25,9 @@ public class DecisionEngine {
      */
     public List<PlayerResult> decide(List<PlayerMove> playerMoves) {
         int playersNumber = playerMoves.size();
-        if (playersNumber == 2)
+        if (playersNumber == 2){
             return twoValuesDecide(playerMoves.get(0), playerMoves.get(1));
+        }
         else {
             String errorMsg = "The players number: " + playersNumber + " is not supported in the current implementation";
             logger.error(errorMsg);

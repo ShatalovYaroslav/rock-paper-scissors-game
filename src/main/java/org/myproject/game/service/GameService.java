@@ -3,6 +3,7 @@ package org.myproject.game.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.myproject.game.client.MoveSelectorClient;
+import org.myproject.game.exception.ClientException;
 import org.myproject.game.model.PlayerMove;
 import org.myproject.game.model.PlayerResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class GameService {
      * @return result list of the game for each player
      */
     public List<PlayerResult> playWithPC(PlayerMove playerMove) {
+        try{
         PlayerMove PCMove = new PlayerMove(PC_PLAYER_ID, moveSelectorClient.selectMove());
         logger.info("Created answer from PC: " + PCMove);
 
@@ -44,5 +46,10 @@ public class GameService {
         List<PlayerResult> results = decisionEngine.decide(playerMoves);
         logger.info("The results of the game: " + results);
         return results;
+        }catch (Exception e)
+        {
+            logger.error(e);
+            throw new ClientException("Exception during play against PC: ", e);
+        }
     }
 }
