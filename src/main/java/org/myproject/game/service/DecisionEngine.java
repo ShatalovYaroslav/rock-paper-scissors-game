@@ -7,7 +7,7 @@ import org.myproject.game.model.PlayerMove;
 import org.myproject.game.model.PlayerResult;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +26,7 @@ public class DecisionEngine {
     }
 
     private List<PlayerResult> twoValuesDecide(PlayerMove playerMove1, PlayerMove playerMove2) {
-        List<PlayerResult> results = Collections.EMPTY_LIST;
+        List<PlayerResult> results = new ArrayList<>();
         int playerValue1 = playerMove1.getMove().getValue();
         int playerValue2 = playerMove2.getMove().getValue();
         GameResult resultPlayer1;

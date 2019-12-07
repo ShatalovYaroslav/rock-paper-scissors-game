@@ -16,7 +16,7 @@ public class PlayerResult extends PlayerMove {
     private GameResult gameResult;
 
     public PlayerResult(PlayerMove playerMove, GameResult gameResult) {
-        super(playerMove.getGamerId(), playerMove.getMove());
+        super(playerMove.getPlayerId(), playerMove.getMove());
         this.gameResult = gameResult;
     }
 }

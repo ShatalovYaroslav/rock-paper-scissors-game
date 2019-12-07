@@ -1,5 +1,6 @@
 package org.myproject.game.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.ToString;
 
@@ -15,7 +16,7 @@ public enum GameMove {
 
     private final int value;
 
-    private GameMove(int value) {
+    GameMove(int value) {
         this.value = value;
     }
 
@@ -23,6 +24,7 @@ public enum GameMove {
         return value;
     }
 
+    @JsonCreator
     public static GameMove convert(String state) {
         if (state == null) {
             return null;

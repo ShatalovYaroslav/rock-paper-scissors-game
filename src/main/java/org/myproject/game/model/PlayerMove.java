@@ -14,8 +14,8 @@ import java.io.Serializable;
 @ToString
 public class PlayerMove implements Serializable {
 
-    @JsonProperty("gamer_id")
-    private String gamerId;
+    @JsonProperty("player_id")
+    private String playerId;
 
     @JsonProperty
     private GameMove move;
