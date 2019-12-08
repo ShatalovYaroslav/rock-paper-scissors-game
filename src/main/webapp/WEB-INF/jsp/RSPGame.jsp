@@ -18,7 +18,7 @@
         <br>
         Enter your 'player ID':
         <br>
-        <input type="text" SIZE=20 name="player_id" value="<%= request.getAttribute("playerId")%>"/>
+        <input type="text" SIZE=20 name="player_id" id="player_id" value="<%= request.getAttribute("playerId")%>"/>
         <br>
 
         Select your move:
@@ -29,13 +29,18 @@
         </select>
 
         <br>
-        <p style=color:red>
+        <p id="Errors" style=color:red>
             <%= request.getAttribute("errorMessage")%>
         </p>
         <br>
 
         <input value="Play" type="button" onclick="submitform()">
     </form>
+
+    <div id="GeneralDiv" style=color:red>
+         <div id="Result"/>
+    </div>
+     <div id="OpponentResult"/>
 </div>
 </body>
 </html>
