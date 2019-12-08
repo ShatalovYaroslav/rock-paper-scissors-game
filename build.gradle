@@ -93,13 +93,14 @@ dependencies {
 
     compile 'org.apache.logging.log4j:log4j-web:2.7'
     compile 'org.springframework.boot:spring-boot-starter-log4j2:1.3.3.RELEASE'
-    compile('org.springframework.boot:spring-boot-starter-web:1.3.3.RELEASE') {
-        exclude module: 'spring-boot-starter-tomcat'
-        exclude module: 'spring-boot-starter-validation'
-    }
-    compile 'org.springframework.hateoas:spring-hateoas:0.19.0.RELEASE'
+    compile('org.springframework.boot:spring-boot-starter-web:1.3.3.RELEASE')
 
-    providedCompile 'org.springframework.boot:spring-boot-starter-tomcat:1.3.3.RELEASE'
+    runtime('org.springframework.boot:spring-boot-devtools:1.3.3.RELEASE')
+    compile 'javax.servlet:jstl'
+    //for support jsp
+    providedCompile 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+    compile 'org.springframework.hateoas:spring-hateoas:0.19.0.RELEASE'
 
     compile 'io.springfox:springfox-spring-web:2.4.0'
     compile 'io.springfox:springfox-swagger2:2.4.0'
