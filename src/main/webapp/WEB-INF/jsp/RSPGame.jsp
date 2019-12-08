@@ -7,8 +7,8 @@
 
 </head>
 
-<body>
-<div align='center'>
+<body style="background-image: url('/img/image_back.jpg');  width: 100%; height: 100%; background-size: 100% 100%;background-repeat: no-repeat;">
+<div align='center' style=color:white>
 
     <form action="/game/playWithPC/" method="post" name="gameForm" id="form_id" class="form_class">
 
@@ -17,10 +17,9 @@
         <h2>To play with Computer submit your choice</h2>
         <br>
         Enter your 'player ID':
-        <br>
         <input type="text" SIZE=20 name="player_id" id="player_id" value="<%= request.getAttribute("playerId")%>"/>
         <br>
-
+        <br>
         Select your move:
         <select name="move">
             <c:forEach items="${moves}" var="move">
@@ -34,7 +33,7 @@
         </p>
         <br>
 
-        <input value="Play" type="button" onclick="submitform()">
+        <input value="Play" type="button" onclick="submitform()" style="width: 7%; height: 15%;"/>
     </form>
 
     <div id="GeneralDiv" style=color:red>

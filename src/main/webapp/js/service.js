@@ -26,11 +26,12 @@ function replaceContentInContainer(id, content) {
 function renderResult (playerId, resultData) {
     console.log("Result data: " + JSON.stringify(resultData));
     var opponent;
-      if (resultData[0].playerId == playerId) {
+      if (resultData[0].player_id === playerId) {
         opponent = resultData[1];
       } else {
         opponent = resultData[0];
       }
+      console.log("opponent" + JSON.stringify(opponent));
     replaceContentInContainer("Result", "The result for you: " + getResultForPlayer(playerId, resultData));
     replaceContentInContainer("OpponentResult", "The move of your opponent: " + opponent.move);
 }
@@ -54,7 +55,6 @@ function submitform(){
       success: function(data){
       console.log(data)
             console.log("Player's move has been successfully posted");
-                    alert("The Player's move has been successfully sent");
              renderResult(playerId, data);
         },
         error: function(xhr, type, exception) {
