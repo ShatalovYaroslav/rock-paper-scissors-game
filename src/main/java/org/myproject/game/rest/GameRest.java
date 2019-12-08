@@ -42,6 +42,7 @@ public class GameRest {
                     " 'player_id' - the ID of your player; \n" +
                     " 'move' - the player's move choice: 'rock', 'paper' or 'scissors' (case insensitive) ")
             @RequestBody PlayerMove playerMove) {
+        logger.info("playWithPC mode, player move: " + playerMove);
         return new ResponseEntity<>(gameService.playWithPC(playerMove), HttpStatus.OK);
     }
 

@@ -2,39 +2,39 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/js/service.js"></script>
 
 </head>
 
 <body>
 <div align='center'>
 
-    <form action="game.form" method="post">
+    <form action="/game/playWithPC/" method="post" name="gameForm" id="form_id" class="form_class">
 
-        <h1>Welcome to Rock, paper, scissors game</h1>
+        <h1>Welcome to Rock, Paper, Scissors game</h1>
 
         <h2>To play with Computer submit your choice</h2>
         <br>
-        Enter your 'player_id':
+        Enter your 'player ID':
         <br>
         <input type="text" SIZE=20 name="player_id" value="<%= request.getAttribute("playerId")%>"/>
         <br>
 
         Select your move:
-        <select name="moveSelected">
+        <select name="move">
             <c:forEach items="${moves}" var="move">
-                <option value="${moves}">${move}</option>
+                <option value="${move}">${move}</option>
             </c:forEach>
         </select>
 
-
         <br>
-
         <p style=color:red>
             <%= request.getAttribute("errorMessage")%>
         </p>
         <br>
 
-        <INPUT TYPE=submit value="Play">
+        <input value="Play" type="button" onclick="submitform()">
     </form>
 </div>
 </body>

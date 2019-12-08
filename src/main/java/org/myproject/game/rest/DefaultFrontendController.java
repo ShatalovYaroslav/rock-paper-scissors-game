@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.stream.Stream;
+
 @Controller
 @RequestMapping(value = "/game")
 public class DefaultFrontendController {
@@ -25,9 +27,11 @@ public class DefaultFrontendController {
 
         model.addAttribute("playerId", playerId);
         model.addAttribute("errorMessage", errorMessage);
-        model.addAttribute("moves", GameMove.values());
+        model.addAttribute("moves", Stream.of(GameMove.values())
+                .map(Enum::name).
+                toArray(String[]::new));
 
-        logger.debug("We are in the welcome controller");
+        logger.debug("We are in the welcome controller for RSP online game");
 
         return "RSPGame";
     }
