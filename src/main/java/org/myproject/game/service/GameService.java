@@ -18,6 +18,7 @@ import java.util.List;
 public class GameService {
 
     private static final String PC_PLAYER_ID = "PC_id";
+    private static final int SUPPORTED_MULTI_PLAYERS_AMOUNT = 2;
     private final Logger logger = LogManager.getRootLogger();
 
     @Autowired
@@ -34,20 +35,19 @@ public class GameService {
      * @return result list of the game for each player
      */
     public List<PlayerResult> playWithPC(PlayerMove playerMove) {
-        try{
-        PlayerMove PCMove = new PlayerMove(PC_PLAYER_ID, moveSelectorClient.selectMove());
-        logger.info("Created answer from PC: " + PCMove);
+        try {
+            PlayerMove PCMove = new PlayerMove(PC_PLAYER_ID, moveSelectorClient.selectMove());
+            logger.info("Created answer from PC: " + PCMove);
 
-        logger.info("Received game move from player: " + playerMove);
-        List<PlayerMove> playerMoves = new ArrayList<>();
-        playerMoves.add(playerMove);
-        playerMoves.add(PCMove);
+            logger.info("Received game move from player: " + playerMove);
+            List<PlayerMove> playerMoves = new ArrayList<>();
+            playerMoves.add(playerMove);
+            playerMoves.add(PCMove);
 
-        List<PlayerResult> results = decisionEngine.decide(playerMoves);
-        logger.info("The results of the game: " + results);
-        return results;
-        }catch (Exception e)
-        {
+            List<PlayerResult> results = decisionEngine.decide(playerMoves);
+            logger.info("The results of the game: " + results);
+            return results;
+        } catch (Exception e) {
             logger.error(e);
             throw new ClientException("Exception during play against PC: ", e);
         }
@@ -60,6 +60,13 @@ public class GameService {
      * @return result list of the game for each player
      */
     public List<PlayerResult> playMultiPlayers(List<PlayerMove> playerMoveList) {
-        return null;
+        int playersNumber = playerMoveList.size();
+        if (playersNumber == SUPPORTED_MULTI_PLAYERS_AMOUNT) {
+            return decisionEngine.decide(playerMoveList);
+        } else {
+            String errorMsg = "The multiple Players mode supports now: " + SUPPORTED_MULTI_PLAYERS_AMOUNT + " players. The submitted players number: " + playersNumber;
+            logger.error(errorMsg);
+            throw new ClientException(errorMsg);
+        }
     }
 }

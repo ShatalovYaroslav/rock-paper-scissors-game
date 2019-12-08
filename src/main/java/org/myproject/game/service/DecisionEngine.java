@@ -16,6 +16,7 @@ import java.util.List;
 @Service()
 public class DecisionEngine {
     private final Logger logger = LogManager.getRootLogger();
+    private static final int SUPPORTED_DECISION_PLAYERS_AMOUNT = 2;
 
     /**
      * for now it is considered a game between 2 players, but an extension can be for more then 2 players
@@ -25,11 +26,11 @@ public class DecisionEngine {
      */
     public List<PlayerResult> decide(List<PlayerMove> playerMoves) {
         int playersNumber = playerMoves.size();
-        if (playersNumber == 2){
+        if (playersNumber == SUPPORTED_DECISION_PLAYERS_AMOUNT) {
             return twoValuesDecide(playerMoves.get(0), playerMoves.get(1));
-        }
-        else {
-            String errorMsg = "The players number: " + playersNumber + " is not supported in the current implementation";
+        } else {
+            String errorMsg = "The players number: " + playersNumber + " is not supported in the current implementation. " +
+                    "It should be: " + SUPPORTED_DECISION_PLAYERS_AMOUNT;
             logger.error(errorMsg);
             throw new ClientException(errorMsg);
         }
