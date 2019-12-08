@@ -41,7 +41,9 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.withArgs;
@@ -61,8 +63,6 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringApplicationConfiguration(classes = {Application.class})
 @WebIntegrationTest(randomPort = true)
 public class SpringGameRestTest extends AbstractRestTest {
-
-    final private RestTemplate restTemplate = new RestTemplate();
 
     private String REST_SERVICE_URI;
 
@@ -111,5 +111,33 @@ public class SpringGameRestTest extends AbstractRestTest {
                 assertThat(results[1].getMove(), is(GameMove.PAPER));
                 break;
         }
+    }
+
+    @Test
+    public void testPlayMultiPlayers() {
+        PlayerMove playerMove1 = new PlayerMove("Yara", GameMove.ROCK);
+        PlayerMove playerMove2 = new PlayerMove("Bob", GameMove.SCISSORS);
+
+        List<PlayerMove> playerMoveList = new ArrayList<>();
+        playerMoveList.add(playerMove1);
+        playerMoveList.add(playerMove2);
+
+        Response response = given().body(playerMoveList)
+                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Content-Type", ContentType.JSON)
+                .when()
+                .post(REST_SERVICE_URI + "playMultiPlayers/");
+
+        response.then()
+                .assertThat()
+                .statusCode(org.apache.http.HttpStatus.SC_OK)
+                .body("", hasSize(2));
+
+        response.then().
+                root("find {it.player_id == '%s'}").
+                body("move", withArgs("Yara"), is("ROCK")).
+                body("game_result", withArgs("Yara"), is("WIN")).
+                body("move", withArgs("Bob"), is("SCISSORS")).
+                body("game_result", withArgs("Bob"), is("LOOSE"));
     }
 }
