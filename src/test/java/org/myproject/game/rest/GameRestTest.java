@@ -82,10 +82,11 @@ public class GameRestTest {
     public void testPlayMultiPlayers() {
         List<PlayerMove> playerMoveList = new ArrayList<>();
         PlayerMove playerMove = PlayerMoveFixture.simplePlayerMove();
+        playerMoveList.add(playerMove);
         PlayerResult playerResult = new PlayerResult(PlayerMoveFixture.simplePlayerMove(), GameResult.WIN);
         List<PlayerResult> mockedResults = new ArrayList<>();
         mockedResults.add(playerResult);
-        when(gameService.playWithPC(playerMove)).thenReturn(mockedResults);
+        when(gameService.playMultiPlayers(playerMoveList)).thenReturn(mockedResults);
 
         ResponseEntity<List<PlayerResult>> actualUsers = gameRest.playMultiPlayers(playerMoveList);
 

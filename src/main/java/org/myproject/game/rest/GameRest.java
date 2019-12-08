@@ -37,14 +37,23 @@ public class GameRest {
     @ApiOperation(value = "Play the 'rock paper scissors' game with PC")
     @ApiResponses(value = {@ApiResponse(code = 400, message = "Bad request, provided not correct value from the player")})
     @RequestMapping(value = "playWithPC/", method = RequestMethod.POST)
-    public ResponseEntity<List<PlayerResult>> playWithPC(@ApiParam(value = "The user should provide requested model in json format to play: \n " +
-            " 'player_id' - the ID of your player; \n" +
-            " 'move' - the player's move choice: 'rock', 'paper' or 'scissors' (case insensitive) ")
-                                                         @RequestBody PlayerMove playerMove) {
+    public ResponseEntity<List<PlayerResult>> playWithPC(
+            @ApiParam(value = "The user should provide requested model in json format to play: \n " +
+                    " 'player_id' - the ID of your player; \n" +
+                    " 'move' - the player's move choice: 'rock', 'paper' or 'scissors' (case insensitive) ")
+            @RequestBody PlayerMove playerMove) {
         return new ResponseEntity<>(gameService.playWithPC(playerMove), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<PlayerResult>> playMultiPlayers(@RequestBody List<PlayerMove> playerMoves) {
-        return null;
+    //-------------------play game between multiple Players--------------------------------------------------------
+    @ApiOperation(value = "Play the 'rock paper scissors' game between multiple Players")
+    @ApiResponses(value = {@ApiResponse(code = 400, message = "Bad request, provided not correct values from the players")})
+    @RequestMapping(value = "playMultiPlayers/", method = RequestMethod.POST)
+    public ResponseEntity<List<PlayerResult>> playMultiPlayers(
+            @ApiParam(value = "The players should provide requested model in json format for each player choice to play: \n " +
+                    " 'player_id' - the ID of your player; \n" +
+                    " 'move' - the player's move choice: 'rock', 'paper' or 'scissors' (case insensitive) ")
+            @RequestBody List<PlayerMove> playerMoves) {
+        return new ResponseEntity<>(gameService.playMultiPlayers(playerMoves), HttpStatus.OK);
     }
 }
