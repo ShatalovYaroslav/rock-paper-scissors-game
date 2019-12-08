@@ -52,4 +52,14 @@ public class GameService {
             throw new ClientException("Exception during play against PC: ", e);
         }
     }
+
+    /**
+     * this method assume play between multiple players
+     *
+     * @param playerMoveList the moves chosen by the Players
+     * @return result list of the game for each player
+     */
+    public List<PlayerResult> playMultiPlayers(List<PlayerMove> playerMoveList) {
+        return null;
+    }
 }

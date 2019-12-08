@@ -76,4 +76,38 @@ public class GameServiceTest {
 
         gameService.playWithPC(playerMove);
     }
+
+    @Test(expected = ClientException.class)
+    public void testPlayMultiPlayersWrongOneParameter() {
+        List<PlayerMove> playerMoveList = new ArrayList<>();
+        playerMoveList.add(PlayerMoveFixture.simplePlayerMove());
+
+        gameService.playMultiPlayers(playerMoveList);
+    }
+
+    @Test(expected = ClientException.class)
+    public void testPlayMultiPlayersWrongAmountParameters() {
+        List<PlayerMove> playerMoveList = new ArrayList<>();
+        playerMoveList.add(PlayerMoveFixture.simplePlayerMove());
+        playerMoveList.add(PlayerMoveFixture.playerMoveWithID("second_player"));
+        playerMoveList.add(PlayerMoveFixture.playerMoveWithID("third_player"));
+
+        gameService.playMultiPlayers(playerMoveList);
+    }
+
+    @Test
+    public void testPlayMultiPlayersResults() {
+        List<PlayerResult> mockedResults = new ArrayList<>();
+
+        List<PlayerMove> playerMoveList = new ArrayList<>();
+        playerMoveList.add(PlayerMoveFixture.playerMoveWithID("first_player"));
+        playerMoveList.add(PlayerMoveFixture.playerMoveWithID("second_player"));
+
+        when(decisionEngine.decide(playerMoveList)).thenReturn(mockedResults);
+        List<PlayerResult> results = gameService.playMultiPlayers(playerMoveList);
+
+        verify(moveSelectorClient, times(0)).selectMove();
+        verify(decisionEngine, times(1)).decide(playerMoveList);
+        assertThat(results, is(mockedResults));
+    }
 }
