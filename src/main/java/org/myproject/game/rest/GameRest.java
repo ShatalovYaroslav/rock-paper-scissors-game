@@ -43,4 +43,8 @@ public class GameRest {
                                                          @RequestBody PlayerMove playerMove) {
         return new ResponseEntity<>(gameService.playWithPC(playerMove), HttpStatus.OK);
     }
+
+    public ResponseEntity<List<PlayerResult>> playMultiPlayers(@RequestBody List<PlayerMove> playerMoves) {
+        return null;
+    }
 }

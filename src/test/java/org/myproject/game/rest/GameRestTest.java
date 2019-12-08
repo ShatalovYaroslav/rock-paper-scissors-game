@@ -77,4 +77,21 @@ public class GameRestTest {
         assertThat(actualUsers.getBody().iterator().next(), is(playerResult));
         verify(gameService, times(1)).playWithPC(playerMove);
     }
+
+    @Test
+    public void testPlayMultiPlayers() {
+        List<PlayerMove> playerMoveList = new ArrayList<>();
+        PlayerMove playerMove = PlayerMoveFixture.simplePlayerMove();
+        PlayerResult playerResult = new PlayerResult(PlayerMoveFixture.simplePlayerMove(), GameResult.WIN);
+        List<PlayerResult> mockedResults = new ArrayList<>();
+        mockedResults.add(playerResult);
+        when(gameService.playWithPC(playerMove)).thenReturn(mockedResults);
+
+        ResponseEntity<List<PlayerResult>> actualUsers = gameRest.playMultiPlayers(playerMoveList);
+
+        assertThat(actualUsers.getStatusCode(), is(HttpStatus.OK));
+        assertThat(actualUsers.getBody().size(), is(1));
+        assertThat(actualUsers.getBody().iterator().next(), is(playerResult));
+        verify(gameService, times(1)).playMultiPlayers(playerMoveList);
+    }
 }
