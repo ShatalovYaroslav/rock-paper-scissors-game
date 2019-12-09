@@ -13,6 +13,11 @@ The 'Computer vs Computer' mode can be used if the participants (Computer client
 'Player vs Player' mode is also possible. The frontend client for game service should interact with service Rest API for multiple players. The client should submit the players choices. <br>
 This service was designed in mind to ease an extensibility and modifications.<br>
 
+## Default Web UI
+The default frontend Web UI client is accessible on the url:
+[http://localhost:8080/game/online/](http://localhost:8080/game/online/)
+It is just enough to start the server with 'gradlew bootRun' command to enjoy the game. 
+
 ## Future extensions
 - more then 2 participants in the game. It can be interesting to have more then 2 players for 1 game. Of course the decision algorithm will be updated.
 - more moves in the game can be supported as extension.
